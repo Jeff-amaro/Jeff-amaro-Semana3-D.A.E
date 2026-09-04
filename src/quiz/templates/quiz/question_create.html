@@ -1,0 +1,19 @@
+{% extends "quiz/base.html" %}
+
+{% block title %}Add question{% endblock %}
+
+{% block content %}
+<h2>Add a new question</h2>
+
+<form method="post" novalidate>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <hr>
+    {{ formset.management_form }}
+    {% for choice_form in formset %}
+        {{ choice_form.as_p }}
+    {% endfor %}
+    {{ formset.non_form_errors }}
+    <button type="submit">Save question</button>
+</form>
+{% endblock %}

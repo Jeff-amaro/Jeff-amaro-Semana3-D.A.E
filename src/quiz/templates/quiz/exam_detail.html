@@ -1,0 +1,27 @@
+{% extends "quiz/base.html" %}
+
+{% block title %}{{ exam.title }}{% endblock %}
+
+{% block content %}
+<h2>{{ exam.title }}</h2>
+<p>{{ exam.description }}</p>
+<p><small>Created on {{ exam.created_at|date:"F j, Y H:i" }}</small></p>
+
+{% for question in exam.questions.all %}
+    <section style="border:1px solid #ccc; border-radius:6px; padding:.75rem 1rem; margin-bottom:1rem;">
+        <h3>Q{{ forloop.counter }}. {{ question.statement }}</h3>
+        <p><small>Score: {{ question.score }} point{{ question.score|pluralize }}</small></p>
+        <ul class="choice">
+            {% for choice in question.choices.all %}
+                <li{% if choice.is_correct %} class="correct"{% endif %}>
+                    {{ choice.text }}{% if choice.is_correct %} &#10003;{% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    </section>
+{% empty %}
+    <p>This exam has no questions yet.</p>
+{% endfor %}
+
+<a href="{% url 'quiz:question_create' %}">Add a new question</a>
+{% endblock %}

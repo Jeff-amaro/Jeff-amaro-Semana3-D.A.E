@@ -1,0 +1,19 @@
+{% extends "quiz/base.html" %}
+
+{% block title %}Exams list{% endblock %}
+
+{% block content %}
+<h2>Exams</h2>
+{% if exams %}
+    <ul>
+        {% for exam in exams %}
+            <li>
+                <a href="{% url 'quiz:exam_detail' exam.pk %}">{{ exam.title }}</a>
+                ({{ exam.questions.count }} questions)
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No exams registered yet.</p>
+{% endif %}
+{% endblock %}
